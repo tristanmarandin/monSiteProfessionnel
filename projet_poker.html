@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<!--
+	Spectral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Projet POKER</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">Projet POKER</a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span>Menu</span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a href="download/_CV_MARANDIN_Tristan.pdf">Curriculum Vitae</a></li>
+											<li><a href="http://lespelerinsdunord.com">Les Pèlerins du Nord</a></li>
+											<li><a href="projet_poker.html">Projet POKER</a></li>
+											<li><a href="projet_boardgame.html">Projet BOARDGAME</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<article id="main">
+						<header>
+							<h2>Projet POKER</h2>
+							<p>Réseaux de neurones</p>
+						</header>
+						<section class="wrapper style5">
+							<div class="inner">
+
+								<section>
+									<header>
+										<h3>Contexte du projet</h3>
+									</header>
+									<p>Nous avons entrepris au cours de cette session de projet, de nous pencher sur les IA élémentaires utilisées dans les jeux de casino. Au poker, le joueur est tenu de disposer d'une main composée de cinq cartes parmi un jeu règlementaire de 52 cartes. Notre objectif est de concevoir un programme qui sera chargé de détecter le résultat d'une main tirée aléatoirement. On entend par résultat d'une main le terme rapporté au motif qui apparaît au sein des cartes de cette dernière. Par exemple, un main comportant exactement quatre cartes portant un numéro identique se verra attribuée le résultat "carré", conformément aux termes du poker.</p>
+									<hr />
+									<header>
+										<h3>Présentation du jeu de données</h3>
+									</header>
+									<h5>Source</h5>
+									<p>Nous avons utilisé le jeu "Poker Hand Dataset" téléchargé sur le site de l'UCI Machine Learning Repository.<br />
+										Créateurs : Robert Cattral &
+										Franz Oppacher, Carleton University, Department of Computer Science Intelligent Systems Research Unit 1125 Colonel By Drive, Ottawa, Ontario, Canada, K1S5B6<br />
+										Date de sortie : Janvier 2007</p>
+									<h5>Information pertinente</h5>
+									<p>Chaque enregistrement est un exemple de main composée de cinq cartes à jouer tirées d'un jeu standard de 52 cartes. Chaque carte est décrite à l'aide de deux attributs (couleur et rang), soit un total de 10 attributs prédictifs.Il existe un attribut de classe qui décrit la "main de poker". L'ordre des cartes est important.C'est pourquoi il y a 480 mains de quinte royale possibles au lieu de 4 (une pour chaque couleur).</p>
+									<h5>Nombre d'instances</h5>
+									<p>25010 testing set, 1,000,000 training set.</p>
+									<h5>Nombre d'attributs</h5>
+									<p>10 attributs prédictifs, 1 attribut de classe attribué.</p>
+									<h5>Information des attributs</h5>
+									<p>1) S1 “Suit of card #1” Ordinal (1-4) representing {Hearts, Spades, Diamonds, Clubs}<br />
+										2) C1 “Rank of card #1” Numerical (1-13) representing (Ace, 2, 3, ... , Queen, King)<br />						
+										3) S2 “Suit of card #2” Ordinal (1-4) representing {Hearts, Spades, Diamonds, Clubs}<br />
+										4) C2 “Rank of card #2” Numerical (1-13) representing (Ace, 2, 3, ... , Queen, King)<br />
+										5) S3 “Suit of card #3” Ordinal (1-4) representing {Hearts, Spades, Diamonds, Clubs}<br />
+										6) C3 “Rank of card #3” Numerical (1-13) representing (Ace, 2, 3, ... , Queen, King)<br />
+										7) S4 “Suit of card #4” Ordinal (1-4) representing {Hearts, Spades, Diamonds, Clubs}<br />
+										8) C4 “Rank of card #4” Numerical (1-13) representing (Ace, 2, 3, ... , Queen, King)<br />
+										9) S5 “Suit of card #5” Ordinal (1-4) representing {Hearts, Spades, Diamonds, Clubs}<br />
+										10) C5 “Rank of card 5” Numerical (1-13) representing (Ace, 2, 3, ... , Queen, King)<br />
+										11) CLASS “Poker Hand” Ordinal (0-9)</p>
+										<hr />								
+									<header>
+										<h3>Méthodologie de résolution</h3>
+									</header>
+									<p>Il nous faut mettre au point un algorithme qui soit capable de déceler des motifs que sont les résultats d'une main, c'est précisément en cela qu'il s'agit d'un problème de Machine Learning. Premièrement, nous disposons d'une base de données fournie (nous n'avons pas à sélectionner des données, réfléchir aux moyens de les mesurer, les collecter, puis les ordonner),qu'il nous faudra préparer et nettoyer afin d'éviter que l'entraînement du modèle soit biaisé. Dans un second temps, l'analyse des données permettra d'identifier un modèle adéquat, que nous allons par la suite entraîner sur un training set. Pour conclure, nous exposerons notre algorithme sur un testing set afin d'en évaluer les performances et de l'améliorer en conséquence.</p>
+									<h5>Type de problème</h5>
+									<p>Toutes les instances des ensembles de données sont étiquetées, ce qui fait de notre algorithme un modèle d'<strong>apprentissage automatique supervisé</strong>.<br />
+										En outre, nous voulons que notre algorithme prédise un résultat discret, c'est-à-dire une étiquette de classe, aux exemples d'entrée. Cela en fait un <strong>modèle de classification</strong>.<br />
+										Enfin, la tâche implique la prédiction d'un classe parmi un esemble supérieur à deux classes, soit dix ici, ce qui en fait un modèle de <strong>classification multi-classes</strong>.</p>
+									<hr />
+									
+								</section>
+
+								
+								<section>
+									<h4>Télécharger le Jupiter du projet</h4>
+									<ul class="actions">
+										<li><a href="download/Projet POKER.ipynb" download="Projet POKER.ipynb.txt" class="button icon solid fa-download">Projet POKER</a></li>
+									</ul>
+								</section>
+
+							</div>
+						</section>
+					</article>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/tristan.marandin" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/?hl=fr" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="mailto:tristan.marandin@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
